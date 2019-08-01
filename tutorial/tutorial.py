@@ -45,6 +45,9 @@ class Vertex(object):
             keys.append(key.id)
         return keys
 
+    def get_neighbors_ids(self):
+        return self.neighbors.keys()
+
     def get_id(self):
         """return the id of this vertex"""
         return self.id
@@ -182,9 +185,20 @@ class Graph:
             self.is_clique(key)
 
 
-    def bfs(self, vert, n):
-        queue = deque()
-        
+    def bfs(self, vert_key, n):
+        if vert_key not in self.vert_dict:
+            raise ValueError('Vert not in graph')
+        vert_key_list = []
+        vert_key_list.append(vert_key)
+        counter = 0
+        while counter < n:
+            neighbors = []
+            for vert_key in vert_key_list:
+                curr_vert = self.get_vertex(vert_key)
+                neighbors.append(curr_vert.get_neighbors())
+            counter += 1
+        return neighbors
+
     def bfs2(self, from_vert, to_vert):
         queue = deque()
         shortest_path = []
@@ -291,3 +305,4 @@ g.add_edge(6, 4)
 
 g.search_clique()
 print(g.cliques)
+print(g.bfs(1, 2))
