@@ -40,21 +40,18 @@ def knapsack_recursive(C, items, n):
         return max(items[n-1][2] + knapsack_recursive(C - items[n-1][1], items, n-1), knapsack_recursive(C, items, n-1))
 
 def knapsack_dp(C, items, n):
-    # Build table of zero values based on size of n
-    K = [[0 for x in range(C+1)] for x in range(n+1)]
-
+    K = [[0 for x in range(C+1)] for x in range(n+1)] 
     for i in range(n+1): 
         for w in range(C + 1): 
             if i ==  0 or w == 0: 
                 K[i][w] = 0
             # weight < capacity
             elif items[i - 1][1] <= w: 
-                #               value         +  look up value using items weight, not using current item
-                K[i][w] = max(items[i - 1][2] + K[i - 1][w - items[i - 1][1]],  K[i - 1][w]) 
+                #               value           # look of row, items weight , not using current item
+                K[i][w] = max(items[i - 1][2] + K[i - 1][w - items[i - 1][1]],  K[i-1][w]) 
             else:
                 # weight > capacity
                 K[i][w] = K[i-1][w]
-
     return K[n][C]
     # return K[n]
 
