@@ -33,4 +33,24 @@ Output: The vertices in a shortest path from from_vertex to to_vertex and the nu
 Vertices in shortest path: 1,2,5
 Number of edges in shortest path: 2
 ## Challenge 3
+Update your Graph ADT code to do the following<br/><br/>
+
+Implement Recursive Depth-first search to determine if there is a path between two vertices in a directed graph.
+Input: A file containing a directed graph, a from_vertex and a to_vertex.<br/><br/>
+
+python3 challenge_3.py graph_data.txt 1 5<br/><br/>
+
+D<br/>
+1,2,3,4,5<br/>
+(1,2)<br/>
+(1,4)<br/>
+(2,3)<br/>
+(2,4)<br/>
+(3,5)<br/>
+(5,2)<br/><br/>
+Output: If there is a path between the vertices (T/F) and the vertices in that path.<br/><br/>
+
+There exists a path between vertex 1 and 5: TRUE<br/>
+Vertices in the path: 1,2,3,5<br/>
+
 ## Challenge 4
