@@ -54,3 +54,29 @@ There exists a path between vertex 1 and 5: TRUE<br/>
 Vertices in the path: 1,2,3,5<br/>
 
 ## Challenge 4
+### Part 1 - Knapsack Problem
+### Identify subproblems
+Consider each permutation of possible combinations
+### Guess first choice
+Consider the first item in array as first choice, and consider having that item vs not having that item
+### Recursively define the value of an optimal solution
+return max(val[n-1] + knapSack(W-wt[n-1], wt, val, n-1),    knapSack(W, wt, val, n-1))
+### Compute the value of an optimal solution (recurse and memoize)
+Add memoization to above funciton
+### Solve original problem - reconstruct from the sub-problems
+The recursive function considers all possible permutations of the items array and returns the combination with the max value given a weight constraint.
+
+### Part 2 - Catalan Numbers
+### Identify subproblems
+
+### Guess first choice
+
+### Recursively define the value of an optimal solution
+$\sum$
+
+### Compute the value of an optimal solution (recurse and memoize)
+Add memoization to above funciton
+### Solve original problem - reconstruct from the sub-problems
+
+
+
