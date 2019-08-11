@@ -68,11 +68,14 @@ The recursive function considers all possible permutations of the items array an
 
 ### Part 2 - Catalan Numbers
 ### Identify subproblems
+Base case: Catalan(0) = 1
+Catalan(s) = \sum_{n=1}^n C_{i}C_{n-1}
+
 
 ### Guess first choice
 
 ### Recursively define the value of an optimal solution
-$\sum$ \sum
+
 
 ### Compute the value of an optimal solution (recurse and memoize)
 Add memoization to above funciton
