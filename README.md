@@ -72,7 +72,7 @@ The recursive function considers all possible permutations of the items array an
 ### Guess first choice
 
 ### Recursively define the value of an optimal solution
-$\sum$
+$\sum$ \sum
 
 ### Compute the value of an optimal solution (recurse and memoize)
 Add memoization to above funciton
