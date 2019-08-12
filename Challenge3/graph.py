@@ -8,7 +8,7 @@ A helper class for the Graph class that defines vertices and vertex neighbors.
 
 class Vertex(object):
 
-    def __init__(self, vertex, visited = False, distance = 9999):
+    def __init__(self, vertex):
         """initialize a vertex and its neighbors
 
         neighbors: set of vertices adjacent to self,
@@ -78,7 +78,6 @@ class Graph:
         return iter(self.vert_dict.values())
 
     def __str__(self):
-      
         return str(self.vert_dict) 
 
     def add_vertex(self, key):
@@ -182,49 +181,17 @@ class Graph:
         """ Iterates through all vertices in graph to search for cliques"""
         for key in self.vert_dict:
             self.is_clique(key)
-
-    def bfs(self, from_vert, to_vert):
-        queue = deque()
-        shortest_path = []
-        visited = {}
-        if from_vert == to_vert:
-            return("Vertices in shortest path: {}\n Number of edges in shortest path: {} ".format(shortest_path, num_edges))
-        else:
-            queue.appendleft(from_vert)
-            visited[from_vert] = 0
-
-        while queue:
-            vert_id = queue.pop()
-            curr_vert = self.get_vertex(vert_id)
-            visited[from_vert] = curr_vert.id
-
-            for neighbor in curr_vert.get_neighbors():
-                if neighbor in visited:
-                    continue
-                queue.appendleft(neighbor)
-                visited[neighbor] = curr_vert.id
-                if curr_vert.id not in shortest_path:
-                    shortest_path.append(curr_vert.id)
-
-        
-        shortest_path.append(to_vert)
-        return("Vertices in shortest path: {}\n Number of edges in shortest path: {} ".format(",".join(shortest_path), len(shortest_path) -1 ))
     
     def depth_first_search(self, vertex_key, parent_reset = True):
-
+        """Recursively traverse through tree using vertex id as input"""
         # Convert vertex key to vertex object
         vertex = self.get_vertex(vertex_key)
-        # print(vertex)
         
         # Get neighbors of vertex
         neighbor_keys = vertex.get_neighbors()
-        # print('neighbors')
-        # print(neighbor_keys)
 
         # Get graph verts
         vertices = self.get_vertices()
-        # print('vertices')
-        # print(vertices)
 
         # Reset parent property from previous call
         if parent_reset:
@@ -234,15 +201,18 @@ class Graph:
             
             vertex.parent = False
 
+        # iterate through neighbor_keys to consider each
+        # neibor of vertex
         for neighbor_key in neighbor_keys:
             neighbor = self.get_vertex(neighbor_key)
             if neighbor.parent == None:
                 neighbor.parent = vertex_key
+                # Recursively search through neighbors neighbors
+                # to search depthwise into graph
                 self.depth_first_search(neighbor_key, False)
     
     def find_path(self, start_key, end_key):
         # get vertex objects from parameter keys
-        start_vert = self.vert_dict[start_key]
         end_vert = self.vert_dict[end_key]
 
         # run depth first search
@@ -251,40 +221,42 @@ class Graph:
         # Create path list
         path = [end_vert.id]
         parent = end_vert
+
+        # Iterate back through parents to append all parents in path
+        # to the list
         while start_key != parent.id:
             if parent is None:
                 return None 
             parent = parent.parent
             if isinstance(parent, int):
-                print('here')
                 parent = self.get_vertex(parent)
-            print(path)
             path.append(parent.id)
-
+        
+        # reverse the path for output readibility
         path[:] = reversed(path)
         return path
 # driver code
-g = Graph()
+# g = Graph()
 
 # # Add your friends
-g.add_vertex(1)
-g.add_vertex(2)
-g.add_vertex(3)
-g.add_vertex(4)
-g.add_vertex(5)
-g.add_vertex(6)
+# g.add_vertex(1)
+# g.add_vertex(2)
+# g.add_vertex(3)
+# g.add_vertex(4)
+# g.add_vertex(5)
+# g.add_vertex(6)
 # g.add_vertex(7)
 
-g.add_edge(1, 5)
-g.add_edge(2, 3)
-g.add_edge(3, 1)
-g.add_edge(3, 4)
+# g.add_edge(1, 5)
+# g.add_edge(2, 3)
+# g.add_edge(3, 1)
+# g.add_edge(3, 4)
 # g.add_edge(3, 2)
 # g.add_edge(3, 4)
 # g.add_edge(1, 5)
-g.add_edge(4, 5)
-g.add_edge(5, 6)
-g.add_edge(6, 4)
+# g.add_edge(4, 5)
+# g.add_edge(5, 6)
+# g.add_edge(6, 4)
 # g.add_edge(6, 7)
 # # print(bfs(g, 1, 4))
 # curr_vert = g.get_vertex(6)
@@ -336,4 +308,4 @@ g.add_edge(6, 4)
 
 # g.search_clique()
 # print(g.cliques)
-print(g.find_path(1, 5))
+# print(g.find_path(1, 5))
