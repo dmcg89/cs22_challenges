@@ -17,9 +17,7 @@ class Vertex(object):
         """
         self.id = vertex
         self.neighbors = {}
-        # self.visited = visited
-        # self.distance = distance
-        # self.path = []
+        self.parent = None
 
     def add_neighbor(self, vertex, weight=0):
         """add a neighbor along a weighted edge"""
@@ -103,6 +101,10 @@ class Graph:
             return self.vert_dict[key]
         else:
             raise KeyError('Vertex not found: {}'.format(key))
+    
+    def get_vertices(self):
+        """Return all the vertices in graph"""
+        return set(self.vert_dict.values())
 
     def add_edge(self, key1, key2, cost=0):
         """add an edge from vertex f to vertex t with a cost
@@ -119,9 +121,9 @@ class Graph:
             self.vert_dict[key1].add_neighbor(self.vert_dict[key2], cost)
             self.vert_dict[key2].add_neighbor(self.vert_dict[key1], cost)
 
-    def get_vertices(self):
-        """return all the vertices in the graph"""
-        return str(self.vert_dict.keys())
+    # def get_vertices(self):
+    #     """return all the vertices in the graph"""
+    #     return str(self.vert_dict.keys())
     
     def is_clique(self, start_id):
         """ Determines if a set exists around a given start_id"""
@@ -207,22 +209,61 @@ class Graph:
         
         shortest_path.append(to_vert)
         return("Vertices in shortest path: {}\n Number of edges in shortest path: {} ".format(",".join(shortest_path), len(shortest_path) -1 ))
+    
+    def depth_first_search(self, vertex_key, parent_reset = True):
+
+        # Convert vertex key to vertex object
+        vertex = self.get_vertex(vertex_key)
+        # print(vertex)
         
-    def _dfs(self, from_vert, to_vert, visit):
-        pass
+        # Get neighbors of vertex
+        neighbor_keys = vertex.get_neighbors()
+        # print('neighbors')
+        # print(neighbor_keys)
+
+        # Get graph verts
+        vertices = self.get_vertices()
+        # print('vertices')
+        # print(vertices)
+
+        # Reset parent property from previous call
+        if parent_reset:
+            # clear parents for each vertex
+            for vert in vertices:
+                vert.parent = None
+            
+            vertex.parent = False
+
+        for neighbor_key in neighbor_keys:
+            neighbor = self.get_vertex(neighbor_key)
+            if neighbor.parent == None:
+                neighbor.parent = vertex_key
+                self.depth_first_search(neighbor_key, False)
     
-    def dfs(self, from_vert, to_vert):
-        items = []
-        if self.num_vertices > 0:
-            self._dfs(from_vert, to_vert, items.append)
+    def find_path(self, start_key, end_key):
+        # get vertex objects from parameter keys
+        start_vert = self.vert_dict[start_key]
+        end_vert = self.vert_dict[end_key]
 
-# friend 1, friend 2, friend 3, friend 4, friend 5
+        # run depth first search
+        self.depth_first_search(start_key)
 
+        # Create path list
+        path = [end_vert.id]
+        parent = end_vert
+        while start_key != parent.id:
+            if parent is None:
+                return None 
+            parent = parent.parent
+            if isinstance(parent, int):
+                print('here')
+                parent = self.get_vertex(parent)
+            print(path)
+            path.append(parent.id)
 
-    
-    # while queue:
-    #     source = queue.pop(0)
-    #     source.visited = True
+        path[:] = reversed(path)
+        return path
+# driver code
 g = Graph()
 
 # # Add your friends
@@ -234,7 +275,7 @@ g.add_vertex(5)
 g.add_vertex(6)
 # g.add_vertex(7)
 
-g.add_edge(1, 2)
+g.add_edge(1, 5)
 g.add_edge(2, 3)
 g.add_edge(3, 1)
 g.add_edge(3, 4)
@@ -293,5 +334,6 @@ g.add_edge(6, 4)
 #         for w in v.get_neighbors():
 #             print("( %s , %s )" % (v.get_id(), w.get_id()))
 
-g.search_clique()
-print(g.cliques)
+# g.search_clique()
+# print(g.cliques)
+print(g.find_path(1, 5))
