@@ -2,6 +2,7 @@ from graph import Graph, Vertex
 import sys
 
 def challenge_5():
+    """Challenge 5 driver code"""
     vertex_list = []
     edges = []
     counter = 0
