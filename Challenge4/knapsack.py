@@ -31,12 +31,9 @@ def knapsack_recursive(C, items, n):
     # If weight of the nth item is is more than the knapsack capacity,
     # then this item is not included in optimal solution
     if items[n-1][1] > C:
-        print('here')
-        print(items[n-1][1])
         return knapsack_recursive(C, items, n-1)
 
     else:
-        print('here2')
         return max(items[n-1][2] + knapsack_recursive(C - items[n-1][1], items, n-1), knapsack_recursive(C, items, n-1))
 
 def knapsack_dp(C, items, n):
