@@ -2,6 +2,7 @@ from graph import Graph, Vertex
 import sys
 
 def challenge_3():
+    """ Driver code for challenge 3"""
     from_vert = int(sys.argv[2])
     to_vert = int(sys.argv[3])
     # print(from_vert)

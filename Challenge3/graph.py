@@ -125,7 +125,7 @@ class Graph:
     #     return str(self.vert_dict.keys())
     
     def is_clique(self, start_id):
-        """ Determines if a set exists around a given start_id"""
+        """ Determines if a clique exists around a given start_id"""
         remain_verts = []
         clique = []
         # Add start id to potential clique list
@@ -178,7 +178,7 @@ class Graph:
 
 
     def search_clique(self):
-        """ Iterates through all vertices in graph to search for cliques"""
+        """ Iterates through all vertices in graph to search for all cliques"""
         for key in self.vert_dict:
             self.is_clique(key)
     
