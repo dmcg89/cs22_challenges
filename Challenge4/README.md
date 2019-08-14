@@ -3,13 +3,13 @@
 #### Sample input
 py knapsack.py OR py dynamic_program.py
 ### Identify subproblems
-Consider each permutation of possible combinations
+Consider each permutation of possible combinations.  Maximize n-1 items with and without the current item.
 ### Guess first choice
-Consider the first item in array as first choice, and consider having that item vs not having that item
+Consider the first item in array as first choice or add a random item to knapsack.
 ### Recursively define the value of an optimal solution
 return max(val[n-1] + knapSack(W-wt[n-1], wt, val, n-1),    knapSack(W, wt, val, n-1))
 ### Compute the value of an optimal solution (recurse and memoize)
-Add memoization to above funciton
+Add memoization to above funciton. Recursion considers all possible knapsack combinations.
 ### Solve original problem - reconstruct from the sub-problems
 The recursive function considers all possible permutations of the items array and returns the combination with the max value given a weight constraint.
 
